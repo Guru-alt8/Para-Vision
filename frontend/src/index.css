@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Outfit:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0F172A;
+  --color-accent: #00C896;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+  --color-background: #F8FAFC;
+  --color-textPrimary: #1E293B;
+  --color-muted: #64748B;
+  --color-glass: rgba(255, 255, 255, 0.7);
+
+  --font-heading: "Outfit", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+
+  --shadow-premium: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+@layer base {
+  body {
+    @apply font-body text-textPrimary bg-background antialiased selection:bg-accent/20;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary hover:bg-slate-800 text-white font-bold py-2.5 px-6 rounded-xl shadow-premium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/20 active:scale-95;
+  }
+  .btn-secondary {
+    @apply bg-white border border-gray-200 hover:bg-gray-50 text-slate-700 font-bold py-2.5 px-6 rounded-xl shadow-premium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-100 active:scale-95;
+  }
+  .card {
+    @apply bg-white/80 backdrop-blur-md rounded-2xl shadow-premium border border-white/40 overflow-hidden transition-all duration-300;
+  }
+  .input-field {
+    @apply w-full border-gray-100 bg-white/50 backdrop-blur-sm rounded-xl py-3 px-4 shadow-sm focus:border-accent focus:ring-accent/20 transition-all text-sm outline-none;
+  }
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-glass;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full hover:bg-slate-300 transition-colors;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
