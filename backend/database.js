@@ -1,9 +1,55 @@
-const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
 
 const dbPath = path.join(__dirname, 'accessmap.db');
-const db = new Database(dbPath);
+
+let db;
+try {
+  const Database = require('better-sqlite3');
+  db = new Database(dbPath);
+} catch (err) {
+  // If better-sqlite3 native binary is missing/mismatched, fall back to built-in node:sqlite
+  const { DatabaseSync } = require('node:sqlite');
+  db = new DatabaseSync(dbPath);
+
+  if (!db.transaction) {
+    db.transaction = function(fn) {
+      return function(...args) {
+        db.exec('BEGIN');
+        try {
+          const res = fn(...args);
+          db.exec('COMMIT');
+          return res;
+        } catch (e) {
+          db.exec('ROLLBACK');
+          throw e;
+        }
+      };
+    };
+  }
+
+  const origPrepare = db.prepare.bind(db);
+  db.prepare = function(sql) {
+    const stmt = origPrepare(sql);
+    const origRun = stmt.run.bind(stmt);
+    const origGet = stmt.get.bind(stmt);
+    const origAll = stmt.all.bind(stmt);
+
+    stmt.run = function(...args) {
+      if (args.length === 1 && Array.isArray(args[0])) return origRun(...args[0]);
+      return origRun(...args);
+    };
+    stmt.get = function(...args) {
+      if (args.length === 1 && Array.isArray(args[0])) return origGet(...args[0]);
+      return origGet(...args);
+    };
+    stmt.all = function(...args) {
+      if (args.length === 1 && Array.isArray(args[0])) return origAll(...args[0]);
+      return origAll(...args);
+    };
+    return stmt;
+  };
+}
 
 function initDb() {
   db.prepare(`

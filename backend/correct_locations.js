@@ -1,6 +1,4 @@
-const Database = require('better-sqlite3');
-const path = require('path');
-const db = new Database(path.join(__dirname, 'accessmap.db'));
+const { db } = require('./database');
 
 const corrections = [
   { name: 'Chennai International Airport Metro', lat: 12.9808, lng: 80.1642 },

@@ -1,6 +1,4 @@
-const Database = require('better-sqlite3');
-const path = require('path');
-const db = new Database(path.join(__dirname, 'accessmap.db'));
+const { db } = require('./database');
 
 try {
   // Ensure the name column is unique to support UPSERT/Conflict resolution safely
