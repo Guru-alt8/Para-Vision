@@ -388,7 +388,7 @@ const Dashboard = () => {
                                         <div className="pt-2">
                                           <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 font-bold">Evidence</h4>
                                           <a 
-                                            href={`http://localhost:5000${report.photo_url}`} 
+                                            href={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${report.photo_url}`} 
                                             target="_blank" 
                                             rel="noopener noreferrer"
                                             className="flex items-center justify-center space-x-2 bg-white border-2 border-primary/20 text-primary p-3 rounded-xl hover:bg-primary hover:text-white transition-all group shadow-sm"

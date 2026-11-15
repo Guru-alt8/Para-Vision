@@ -44,7 +44,7 @@ function AnimatedRoutes() {
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename={import.meta.env.BASE_URL}>
         <div className="min-h-screen flex flex-col selection:bg-accent/30">
           <Navbar />
           <main className="flex-1 flex flex-col">

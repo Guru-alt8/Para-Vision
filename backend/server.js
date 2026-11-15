@@ -31,7 +31,7 @@ const upload = multer({
   }
 });
 
-const JWT_SECRET = 'accessmap_india_secret_key_2024';
+const JWT_SECRET = process.env.JWT_SECRET || 'accessmap_india_secret_key_2024';
 
 const app = express();
 app.use(cors());
@@ -439,7 +439,7 @@ app.get('/api/amenities', (req, res) => {
   }
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
